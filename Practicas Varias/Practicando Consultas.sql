@@ -1,3 +1,6 @@
+-- @author: lyraNoMilo_19
+-- @date: September 29, 2020.
+
 -- Practicando consultas varias.
 
 -- Base: BDEnterprise.

@@ -1,4 +1,6 @@
--- 
+-- @author: lyraNoMilo_19
+-- @date: October 6, 2020.
+
 -- Dispenser, Product, Sale, Receipt.
 
 DROP DATABASE IF EXISTS DispenserSale;

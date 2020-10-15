@@ -1,3 +1,6 @@
+-- @author: lyraNoMilo_19
+-- @date: October 11, 2020.
+
 DROP DATABASE IF EXISTS Matrix;
 
 CREATE DATABASE Matrix;

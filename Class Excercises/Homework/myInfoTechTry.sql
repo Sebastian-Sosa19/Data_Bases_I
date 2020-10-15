@@ -1,3 +1,6 @@
+-- @author: lyraNoMilo_19
+-- @date: October 13, 2020.
+
 DROP DATABASE IF EXISTS InformationTechnologies;
 
 CREATE DATABASE InformationTechnologies;

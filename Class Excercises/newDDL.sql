@@ -1,4 +1,5 @@
-
+-- @author: lyraNoMilo_19
+-- @date: October 2, 2020.
 
 -- SQL file for integrity constraints.
 
