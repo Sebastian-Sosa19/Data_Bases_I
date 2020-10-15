@@ -1,5 +1,5 @@
 -- @author: lyraNoMilo_19
--- @date: October 6, 2020.
+-- @date: October 15, 2020.
 
 -- Dispenser, Product, Sale, Receipt.
 

@@ -1,5 +1,5 @@
 -- @author: lyraNoMilo_19
--- @date: October 2, 2020.
+-- @date: October 15, 2020.
 
 DROP DATABASE IF EXISTS COLLEGE;
 
