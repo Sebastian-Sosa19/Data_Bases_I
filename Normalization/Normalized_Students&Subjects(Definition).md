@@ -35,6 +35,7 @@
     - id
     - person's id
     - start year
+    - mail
     
     Not too much to add.
 
