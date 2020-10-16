@@ -1,21 +1,21 @@
 -- @author: lyraNoMilo_19
 -- @date: October 15, 2020.
 
-DROP DATABASE IF EXISTS COLLEGE;
+DROP DATABASE IF EXISTS CollegeNormalized;
 
-CREATE DATABASE COLLEGE CHARACTER SET utf8;
+CREATE DATABASE CollegeNormalized CHARACTER SET utf8;
 
-USE COLLEGE;
+USE CollegeNormalized;
 
 CREATE TABLE Person(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     var_fname VARCHAR(25) NOT NULL,
-    var_lname VARCHAR(25),
+    var_sname VARCHAR(25),
     var_flname VARCHAR(25) NOT NULL,
     var_slname VARCHAR(25),    
-    enu_gender ENUM('F','M')
-    dat_birthdate DATE,
-    int_age (SELECT YEAR(NOW()) - YEAR(dat_birthdate)),
+    enu_gender ENUM('F','M'),
+    dat_birthdate DATE
+    -- int_age INT AS (SELECT YEAR(NOW()) - YEAR(dat_birthdate))
 );
 
 CREATE TABLE Student(
@@ -26,7 +26,7 @@ CREATE TABLE Student(
 
     CHECK (int_semester IN (1,2,3)),
 
-    FOREIGN KEY id_person
+    FOREIGN KEY (id_person)
     REFERENCES Person(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
@@ -38,7 +38,7 @@ CREATE TABLE Teacher(
     var_mail VARCHAR(30) NOT NULL,
     cha_startyear CHAR(4) NOT NULL,
 
-    FOREIGN KEY id_person
+    FOREIGN KEY (id_person)
     REFERENCES Person(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE    
@@ -62,14 +62,14 @@ CREATE TABLE Subjects(
     - Physic Education
 */
 
-INSERT INTO Subjects(var_name, int_vu, var_section) VALUES ('General History', 4);
-INSERT INTO Subjects(var_name, int_vu, var_section) VALUES ('Biology', 4);
-INSERT INTO Subjects(var_name, int_vu, var_section) VALUES ('Math', 5);
-INSERT INTO Subjects(var_name, int_vu, var_section) VALUES ('Physics', 5);
-INSERT INTO Subjects(var_name, int_vu, var_section) VALUES ('Music Appreciation', 3);
-INSERT INTO Subjects(var_name, int_vu, var_section) VALUES ('Spanish', 4);
-INSERT INTO Subjects(var_name, int_vu, var_section) VALUES ('Sciense', 5);
-INSERT INTO Subjects(var_name, int_vu, var_section) VALUES ('Physic', 3);
+INSERT INTO Subjects(var_name, int_vu) VALUES ('General History', 4);
+INSERT INTO Subjects(var_name, int_vu) VALUES ('Biology', 4);
+INSERT INTO Subjects(var_name, int_vu) VALUES ('Math', 5);
+INSERT INTO Subjects(var_name, int_vu) VALUES ('Physics', 5);
+INSERT INTO Subjects(var_name, int_vu) VALUES ('Music Appreciation', 3);
+INSERT INTO Subjects(var_name, int_vu) VALUES ('Spanish', 4);
+INSERT INTO Subjects(var_name, int_vu) VALUES ('Sciense', 5);
+INSERT INTO Subjects(var_name, int_vu) VALUES ('Physic', 3);
 
 
 CREATE TABLE GeneralHystoryStudents(
@@ -77,12 +77,12 @@ CREATE TABLE GeneralHystoryStudents(
     id_student INT NOT NULL,
     id_subject INT DEFAULT 1,    
 
-    FOREIGN KEY id_student
+    FOREIGN KEY (id_student)
     REFERENCES Student(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 
-    FOREIGN KEY id_subject
+    FOREIGN KEY (id_subject)
     REFERENCES Subjects(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
@@ -93,12 +93,12 @@ CREATE TABLE BiologyStudents(
     id_student INT NOT NULL,
     id_subject INT DEFAULT 2,    
 
-    FOREIGN KEY id_student
+    FOREIGN KEY (id_student)
     REFERENCES Student(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 
-    FOREIGN KEY id_subject
+    FOREIGN KEY (id_subject)
     REFERENCES Subjects(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
@@ -109,12 +109,12 @@ CREATE TABLE MathStudents(
     id_student INT NOT NULL,
     id_subject INT DEFAULT 3,    
 
-    FOREIGN KEY id_student
+    FOREIGN KEY (id_student)
     REFERENCES Student(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 
-    FOREIGN KEY id_subject
+    FOREIGN KEY (id_subject)
     REFERENCES Subjects(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
@@ -125,12 +125,12 @@ CREATE TABLE PhysicsStudents(
     id_student INT NOT NULL,
     id_subject INT DEFAULT 4,    
 
-    FOREIGN KEY id_student
+    FOREIGN KEY (id_student)
     REFERENCES Student(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 
-    FOREIGN KEY id_subject
+    FOREIGN KEY (id_subject)
     REFERENCES Subjects(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
@@ -141,12 +141,12 @@ CREATE TABLE MusicAppreciationStudents(
     id_student INT NOT NULL,
     id_subject INT DEFAULT 5,    
 
-    FOREIGN KEY id_student
+    FOREIGN KEY (id_student)
     REFERENCES Student(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 
-    FOREIGN KEY id_subject
+    FOREIGN KEY (id_subject)
     REFERENCES Subjects(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
@@ -157,12 +157,12 @@ CREATE TABLE SpanishStudents(
     id_student INT NOT NULL,
     id_subject INT DEFAULT 6,    
 
-    FOREIGN KEY id_student
+    FOREIGN KEY (id_student)
     REFERENCES Student(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 
-    FOREIGN KEY id_subject
+    FOREIGN KEY (id_subject)
     REFERENCES Subjects(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
@@ -172,12 +172,12 @@ CREATE TABLE ScienceStudents(
     id_student INT NOT NULL,
     id_subject INT DEFAULT 7,    
 
-    FOREIGN KEY id_student
+    FOREIGN KEY (id_student)
     REFERENCES Student(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 
-    FOREIGN KEY id_subject
+    FOREIGN KEY (id_subject)
     REFERENCES Subjects(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
@@ -188,12 +188,12 @@ CREATE TABLE PhysicEducationStudents(
     id_student INT NOT NULL,
     id_subject INT DEFAULT 8,    
 
-    FOREIGN KEY id_student
+    FOREIGN KEY (id_student)
     REFERENCES Student(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 
-    FOREIGN KEY id_subject
+    FOREIGN KEY (id_subject)
     REFERENCES Subjects(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
@@ -204,12 +204,12 @@ CREATE TABLE GeneralHystoryTeachers(
     id_teacher INT NOT NULL,
     id_subject INT DEFAULT 1,    
 
-    FOREIGN KEY id_teacher
+    FOREIGN KEY (id_teacher)
     REFERENCES Teacher(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 
-    FOREIGN KEY id_subject
+    FOREIGN KEY (id_subject)
     REFERENCES Subjects(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
@@ -220,12 +220,12 @@ CREATE TABLE BiologyTeachers(
     id_teacher INT NOT NULL,
     id_subject INT DEFAULT 2,    
 
-    FOREIGN KEY id_teacher
+    FOREIGN KEY (id_teacher)
     REFERENCES Teacher(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 
-    FOREIGN KEY id_subject
+    FOREIGN KEY (id_subject)
     REFERENCES Subjects(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
@@ -236,12 +236,12 @@ CREATE TABLE MathTeachers(
     id_teacher INT NOT NULL,
     id_subject INT DEFAULT 3,    
 
-    FOREIGN KEY id_teacher
+    FOREIGN KEY (id_teacher)
     REFERENCES Teacher(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 
-    FOREIGN KEY id_subject
+    FOREIGN KEY (id_subject)
     REFERENCES Subjects(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
@@ -252,12 +252,12 @@ CREATE TABLE PhysicsTeachers(
     id_teacher INT NOT NULL,
     id_subject INT DEFAULT 4,    
 
-    FOREIGN KEY id_teacher
+    FOREIGN KEY (id_teacher)
     REFERENCES Teacher(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 
-    FOREIGN KEY id_subject
+    FOREIGN KEY (id_subject)
     REFERENCES Subjects(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
@@ -268,12 +268,12 @@ CREATE TABLE MusicAppreciationTeachers(
     id_teacher INT NOT NULL,
     id_subject INT DEFAULT 5,    
 
-    FOREIGN KEY id_teacher
+    FOREIGN KEY (id_teacher)
     REFERENCES Teacher(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 
-    FOREIGN KEY id_subject
+    FOREIGN KEY (id_subject)
     REFERENCES Subjects(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
@@ -284,12 +284,12 @@ CREATE TABLE SpanishTeachers(
     id_teacher INT NOT NULL,
     id_subject INT DEFAULT 6,    
 
-    FOREIGN KEY id_teacher
+    FOREIGN KEY (id_teacher)
     REFERENCES Teacher(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 
-    FOREIGN KEY id_subject
+    FOREIGN KEY (id_subject)
     REFERENCES Subjects(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
@@ -300,12 +300,12 @@ CREATE TABLE ScienceTeachers(
     id_teacher INT NOT NULL,
     id_subject INT DEFAULT 7,    
 
-    FOREIGN KEY id_teacher
+    FOREIGN KEY (id_teacher)
     REFERENCES Teacher(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 
-    FOREIGN KEY id_subject
+    FOREIGN KEY (id_subject)
     REFERENCES Subjects(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
@@ -316,12 +316,12 @@ CREATE TABLE PhysicEducationTeachers(
     id_teacher INT NOT NULL,
     id_subject INT DEFAULT 8,    
 
-    FOREIGN KEY id_teacher
+    FOREIGN KEY (id_teacher)
     REFERENCES Teacher(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
 
-    FOREIGN KEY id_subject
+    FOREIGN KEY (id_subject)
     REFERENCES Subjects(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
@@ -329,10 +329,10 @@ CREATE TABLE PhysicEducationTeachers(
 
 INSERT INTO Person(
     var_fname,
-    var_lname,
+    var_sname,
     var_flname,
     var_slname,    
-    enu_gender
+    enu_gender,
     dat_birthdate    
 ) VALUES 
     ('Leon', 'Scott', 'Kennedy', 'Sánchez', 'M', '1999-11-19'),
@@ -377,7 +377,7 @@ INSERT INTO Teacher(id_person, var_mail, cha_startyear) VALUES
 */
 
 INSERT INTO GeneralHystoryTeachers(id_teacher) VALUES (1);
-INSERT INTO BiologyTeachersTeachers(id_teacher) VALUES (2);
+INSERT INTO BiologyTeachers(id_teacher) VALUES (2);
 INSERT INTO MathTeachers(id_teacher) VALUES (3);
 INSERT INTO PhysicsTeachers(id_teacher) VALUES (4);
 INSERT INTO MusicAppreciationTeachers(id_teacher) VALUES (5);
@@ -393,7 +393,4 @@ INSERT INTO MusicAppreciationStudents(id_student) VALUES (5),(2),(6),(5),(8),(10
 INSERT INTO SpanishStudents(id_student) VALUES (6),(1),(2),(3),(7),(9);
 INSERT INTO ScienceStudents(id_student) VALUES (7),(3),(1),(6),(5),(10);
 INSERT INTO PhysicEducationStudents(id_student) VALUES (8),(7),(5),(3),(4),(10);
-
-
-
 
