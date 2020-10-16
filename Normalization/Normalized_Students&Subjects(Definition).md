@@ -180,6 +180,7 @@
     - hour
 
 ## Is this well done?
-    We'll see when all of this is implemented in a SQL Script.
+    The only observation I have, is in the section definition.
+    Should it go in the students/teachers register for each class or as a single different table?
     
     
