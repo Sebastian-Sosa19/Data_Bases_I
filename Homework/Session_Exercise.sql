@@ -7,12 +7,12 @@ USE armarioDB;
 
 /*Definición de tabla Armario*/
 CREATE TABLE Armario(
-        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-        var_marca VARCHAR(60),
-        tim_fecha TIMESTAMP NOT NULL DEFAULT NOW(),
-        var_material VARCHAR(25) NOT NULL,
-        var_dueño VARCHAR(25) NOT NULL,
-        var_tamaño VARCHAR(6) NOT NULL
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    var_marca VARCHAR(60),
+    tim_fecha TIMESTAMP NOT NULL DEFAULT NOW(),
+    var_material VARCHAR(25) NOT NULL,
+    var_dueño VARCHAR(25) NOT NULL,
+    var_tamaño VARCHAR(6) NOT NULL
 );
 
 /*Definición de tabla Vestuario*/

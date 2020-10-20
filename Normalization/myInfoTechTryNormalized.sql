@@ -9,11 +9,57 @@ USE InformationTechnologies;
 
 CREATE TABLE PCInventory(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    tex_name TEXT NOT NULL,
-    cod_type ENUM('Laptop', 'Desktop', 'Tablet') NOT NULL DEFAULT 'Laptop',
-    sma_ram SMALLINT UNSIGNED NOT NULL DEFAULT 0,
-    sma_ssd SMALLINT UNSIGNED NOT NULL DEFAULT 0
+    id_brand INT NOT NULL COMMENT,
+    id_ramConfig INT NOT NULL COMMENT,
+    id_ssdConfig INT NOT NULL COMMENT,
+    id_screenPanelConfig INT NOT NULL COMMENT,    
+    tex_modelName TEXT NOT NULL COMMENT,
+    tex_description TEXT NOT NULL COMMENT,
+    num_amount INT NOT NULL DEFAULT 0 COMMENT
 );
+
+CREATE TABLE PartBrand(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    tex_name TEXT NOT NULL COMMENT,
+) COMMENT ;
+
+CREATE TABLE PCSSDConfiguration(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_brand INT NOT NULL COMMENT,
+    id_ssdType INT NOT NULL COMMENT,
+    num_amount SMALLINT UNSIGNED NOT NULL DEFAULT 0 COMMENT,
+    num_speed SMALLINT UNSIGNED NOT NULL DEFAULT 0 COMMENT
+) COMMENT ;
+
+CREATE TABLE PCRAMConfiguration(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_brand INT NOT NULL COMMENT,
+    num_amount SMALLINT UNSIGNED NOT NULL DEFAULT 0 COMMENT,
+    num_speed SMALLINT UNSIGNED NOT NULL DEFAULT 0 COMMENT
+) COMMENT ;
+
+CREATE TABLE PCSSDConfigurationType(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    tex_type VARCHAR(20) NOT NULL COMMENT
+) COMMENT ;
+
+CREATE TABLE PCScreenPanelConfiguration(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_screenRatio INT NOT NULL COMMENT,
+    id_panelType INT NOT NULL COMMENT,
+    num_inches TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT
+) COMMENT ;
+
+CREATE TABLE PCScreenPanelConfigurationType(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tex_type VARCHAR(20) NOT NULL COMMENT
+) COMMENT ;
+
+CREATE TABLE PCScreenPanelConfigurationRatio(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    num_width TINYINT NOT NULL DEFAULT 0 COMMENT,
+    num_height TINYINT NOT NULL DEFAULT 0 COMMENT
+) COMMENT ;
 
 INSERT INTO PCInventory (tex_name, sma_ram, sma_ssd) VALUES 
     ("ACER P1020", 8, 32),
@@ -24,7 +70,7 @@ INSERT INTO PCInventory (tex_name, sma_ram, sma_ssd) VALUES
     ("Dell XPS 17 1", 16, 2048),
     ("Dell XPS 17 2", 64, 2048),
     ("Dell XPS 17 3", 16, 128),
-    ("Dell XPS 17 2", 128, 256);
+    ("Dell XPS 17 2", 128, 256),
     ("Dell XPS 17 4", 64, 256);
 
 -- Listar todos los computadores del inventario.

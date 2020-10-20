@@ -15,7 +15,7 @@ CREATE TABLE Person(
     var_slname VARCHAR(25),    
     enu_gender ENUM('F','M'),
     dat_birthdate DATE
-    -- int_age INT AS (SELECT YEAR(NOW()) - YEAR(dat_birthdate))
+    -- int_age YEAR AS (SELECT YEAR(NOW()) - YEAR(dat_birthdate))
 );
 
 CREATE TABLE Student(
@@ -47,7 +47,7 @@ CREATE TABLE Teacher(
 CREATE TABLE Subjects(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     var_name VARCHAR(50) NOT NULL,
-    int_vu INT NOT NULL   
+    int_vu INT NOT NULL 
     
 );
 
