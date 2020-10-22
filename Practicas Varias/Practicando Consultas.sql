@@ -133,3 +133,137 @@ SELECT CUS.COMPANY, MAX(AMOUNT)
     ON ORDERS.CUST = CUS.CUST_NUM
     GROUP BY CUST
     ORDER BY MAX(AMOUNT) DESC;
+
+/* 
+    Create a new user named Lynda, grant only Insert and Delete privileges for all databases, with password notLynda.
+*/
+
+CREATE USER 'lynda'@'localhost' IDENTIFIED BY 'notlynda';
+
+GRANT INSERT, DELETE ON *.* TO 'lynda'@'localhost';
+
+/*
+    Give Lynda all privileges on all tables.
+*/
+
+GRANT ALL PRIVILEGES ON *.* TO 'lynda'@'localhost';
+
+/*
+    Take away all of Lynda's privileges.
+*/
+
+REVOKE ALL PRIVILEGES ON *.* TO 'lynda'@'localhost';
+
+/*
+    Get rid of Lynda user.
+*/
+
+DROP USER 'lynda'@'localhost';
+
+/*
+    Retrieve the average amount of orders per each customer with sellers in New York, Chicago and Atlanta Offices.
+    We made a sub query to retrieve the salesreps from the specified offices, then we just inserted that sub query as a table in the from clause of the main query, and matching the corresponing attributes.
+    I must remember everytime I make a JOIN clause the ON condition must be made in order to relate the three tables in a specific rule.
+    Capture : 013
+
+*/
+
+SELECT EMP.EMPL_NUM 'EMPLOYEE' 
+    FROM SALESREPS EMP JOIN OFFICES
+    ON EMP.REP_OFFICE = OFFICES.OFFICE
+    WHERE OFFICES.OFFICE IN (11, 12, 13);
+
+SELECT CUST.COMPANY 'CUSTOMER', AVG(ORDERS.AMOUNT)
+    FROM CUSTOMERS CUST JOIN ORDERS JOIN
+        (SELECT EMP.EMPL_NUM EMPLOYEE
+        FROM SALESREPS EMP JOIN OFFICES
+        ON EMP.REP_OFFICE = OFFICES.OFFICE
+        WHERE OFFICES.OFFICE IN (11, 12, 13)) AS SELLERS
+    ON ORDERS.REP = SELLERS.`EMPLOYEE` AND
+        ORDERS.CUST = CUST.CUST_NUM
+    GROUP BY CUST.COMPANY;
+
+/*
+    Retrieve all the customers whose average amount is greater than their credit limit, and also whose employee's sales are greater than their quota.
+    We first make two queries to construct the tables due the conditions for the main query. Then we just join them along with ORDERS and CUSTOMERS to make the correct matches in the main query.
+    Capture : 014
+*/
+
+SELECT CUST.CUST_NUM 'CUST_ID', AVG(ORD.AMOUNT) 'AVG'
+    FROM ORDERS ORD JOIN CUSTOMERS CUST
+    ON ORD.CUST = CUST.CUST_NUM
+    WHERE ORD.AMOUNT > CUST.CREDIT_LIMIT
+    GROUP BY CUST.CUST_NUM;
+
+SELECT EMPL_NUM 
+    FROM SALESREPS
+    WHERE SALES > QUOTA;
+
+SELECT CUST.COMPANY 'COMPANY', AVERAGE.`AVG`
+    FROM CUSTOMERS CUST JOIN ORDERS ORDR JOIN
+        (SELECT CUST.CUST_NUM 'CUST_ID', AVG(ORD.AMOUNT) 'AVG'
+            FROM ORDERS ORD JOIN CUSTOMERS CUST
+            ON ORD.CUST = CUST.CUST_NUM
+            WHERE ORD.AMOUNT > CUST.CREDIT_LIMIT
+            GROUP BY CUST.CUST_NUM) AVERAGE JOIN
+        (SELECT EMPL_NUM 'EMPLOYEE'
+            FROM SALESREPS
+            WHERE SALES > QUOTA) AS EMPLOYEES
+    ON CUST.CUST_NUM = AVERAGE.`CUST_ID` AND CUST.CUST_NUM = ORDR.CUST AND ORDR.REP = EMPLOYEES.`EMPLOYEE`;
+
+/*
+    Retrieve the number of orders assigned to each employee, also the average amount of their respective orders.
+    Here are three ways for resolving this query.
+    In the first one, the subquery returns a value in the select list, a value that must match the employee number in the same select list, and must be grouped by the same value. In the second one, we use two subqueries in the from clause, one that retrieves the number of customers per employee, and other that retrieves the average amount for the sum of all the customers of each employees. The last one is a lighter form of the second one, since we don't complicate too much in the first subquery.
+    Cap: 015
+*/
+
+SELECT EMP.EMPL_NUM 'EMPLOYEE', COUNT(ORD.CUST) 'ORDERS', (SELECT AVG(FORD.AMOUNT) 'AVG_AMOUNT'
+        FROM ORDERS FORD
+        WHERE FORD.REP = EMP.EMPL_NUM
+        GROUP BY FORD.REP) 'AVG'
+    FROM SALESREPS EMP JOIN ORDERS ORD
+    ON EMP.EMPL_NUM = ORD.REP
+    GROUP BY EMP.EMPL_NUM;
+
+SELECT REPS.EMPL_NUM EMPLOYEES, AVG_AMT.`AVG_AMOUNT` AVG_AMNT, CUST_PER_EMP.`ORDERS`
+    FROM SALESREPS REPS JOIN
+        (SELECT EMP.EMPL_NUM 'EMPLOYEE', COUNT(ORD.CUST) 'ORDERS'
+            FROM SALESREPS EMP JOIN ORDERS ORD
+            ON EMP.EMPL_NUM = ORD.REP
+            GROUP BY EMP.EMPL_NUM) CUST_PER_EMP JOIN
+        (SELECT REP, AVG(AMOUNT) AVG_AMOUNT
+            FROM ORDERS
+            GROUP BY REP) AVG_AMT
+    ON REPS.EMPL_NUM = AVG_AMT.`REP` AND REPS.EMPL_NUM = CUST_PER_EMP.`EMPLOYEE`;
+
+SELECT REPS.EMPL_NUM EMPLOYEES, AVG_AMT.`AVG_AMOUNT` AVG_AMNT, CUST_PER_EMP.`ORDERS`
+    FROM SALESREPS REPS JOIN
+        (SELECT REP, COUNT(CUST) 'ORDERS'
+            FROM ORDERS            
+            GROUP BY REP) CUST_PER_EMP JOIN
+        (SELECT REP, AVG(AMOUNT) AVG_AMOUNT
+            FROM ORDERS
+            GROUP BY REP) AVG_AMT
+    ON REPS.EMPL_NUM = AVG_AMT.`REP` AND REPS.EMPL_NUM = CUST_PER_EMP.`REP`;
+
+/*
+    Repeat the last query but display the employee names.
+    We must only change a single parameter in the select list.
+*/
+    
+SELECT EMP.NAME 'EMPLOYEE', COUNT(ORD.CUST) 'ORDERS', (SELECT AVG(FORD.AMOUNT) 'AVG_AMOUNT'
+        FROM ORDERS FORD
+        WHERE FORD.REP = EMP.EMPL_NUM
+        GROUP BY FORD.REP) 'AVG AMOUNT'
+    FROM SALESREPS EMP JOIN ORDERS ORD
+    ON EMP.EMPL_NUM = ORD.REP
+    GROUP BY EMP.EMPL_NUM;
+
+/*
+    
+*/
+
+SELECT SALE.EMPL_NUM
+    FROM SALESREPS SALE OUTER JOIN OFFICES
+    ON SALE.REP_OFFICE = OFFICE;
