@@ -149,4 +149,20 @@ SELECT Inventory.`Marca` 'Marca Respuesta 2'
     ON Inventory.`Marca` = PCGroupBigRam.`Marca`
     WHERE PCGroupBigRam.`Marca` IS NULL;
     
+-- Agregar una fila a la tabla PCInventory después de la columna de nombre.
 
+ALTER TABLE PCInventory
+    ADD test BOOLEAN NOT NULL DEFAULT 1
+    AFTER tex_name;
+    
+-- Modificar la definición de la columna recién agregada.
+
+ALTER TABLE PCInventory
+    MODIFY
+        test TINYINT NOT NULL;
+
+-- Borrar la nueva columna de la tabla.
+
+ALTER TABLE PCInventory
+    DROP
+        test;
