@@ -248,7 +248,7 @@ SELECT REPS.EMPL_NUM EMPLOYEES, AVG_AMT.`AVG_AMOUNT` AVG_AMNT, CUST_PER_EMP.`ORD
     ON REPS.EMPL_NUM = AVG_AMT.`REP` AND REPS.EMPL_NUM = CUST_PER_EMP.`REP`;
 
 /*
-    Repeat the last query but display the employee names.
+    Repeat the last query but display the employee names whose order customers are above two.
     We must only change a single parameter in the select list.
 */
     
@@ -258,7 +258,8 @@ SELECT EMP.NAME 'EMPLOYEE', COUNT(ORD.CUST) 'ORDERS', (SELECT AVG(FORD.AMOUNT) '
         GROUP BY FORD.REP) 'AVG AMOUNT'
     FROM SALESREPS EMP JOIN ORDERS ORD
     ON EMP.EMPL_NUM = ORD.REP
-    GROUP BY EMP.EMPL_NUM;
+    GROUP BY EMP.EMPL_NUM
+    HAVING COUNT(ORD.CUST) > 2;
 
 /*
     
@@ -267,3 +268,10 @@ SELECT EMP.NAME 'EMPLOYEE', COUNT(ORD.CUST) 'ORDERS', (SELECT AVG(FORD.AMOUNT) '
 SELECT SALE.EMPL_NUM
     FROM SALESREPS SALE OUTER JOIN OFFICES
     ON SALE.REP_OFFICE = OFFICE;
+
+/*
+    Text handlers
+    - substring(string, position start, character number)
+    - substring_index(string, character start, number of characters)
+    
+*/
