@@ -9,14 +9,16 @@ DELIMITER $$
 
     DROP PROCEDURE IF EXISTS sp_factorial$$
 
-    CREATE PROCEDURE sp_factorial(IN N INT, OUT FACT INT)
+    CREATE PROCEDURE sp_factorial(IN N VARCHAR(25), OUT FACT INT)
     BEGIN
 
-        IF N = 1 THEN
+        SELECT CAST(N AS SIGNED);
+
+        IF N = 1 AND 1<2 THEN
             SELECT 1 INTO FACT;
         ELSE
             CALL sp_factorial(N-1, @TEMP);
-            SELECT N*@TEMP INTO FACT;
+            SET FACT = N*@TEMP;
         END IF;
     
     END$$
