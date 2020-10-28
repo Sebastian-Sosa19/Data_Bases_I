@@ -22,7 +22,7 @@ DELIMITER $$
 
     BEGIN
         
-        SET @lastCommand = SELECT JSON_VALUE(c_json, CONCAT('"$.'+key_json+'"'));
+        SET @lastCommand = JSON_UNQUOTE(JSON_EXTRACT(c_json, (CONCAT('$.',key_json))));
 
         SELECT 
             @lastCommand AS "Último comando",
@@ -70,5 +70,5 @@ DELIMITER ;
 
 SET @lastRequest = (SELECT jso_request FROM RequestQueue WHERE bit_read = 0 ORDER BY id ASC LIMIT 1);
 
-CALL sp_case(@lastRequest, "command");
+CALL sp_case(@lastRequest, 'command');
 
