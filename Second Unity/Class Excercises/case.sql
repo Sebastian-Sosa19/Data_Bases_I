@@ -31,7 +31,7 @@ INSERT INTO RequestQueue(jso_request, bit_read) VALUES
 SET @lastRequest = (SELECT jso_request FROM RequestQueue WHERE bit_read = 0 ORDER BY id ASC LIMIT 1);
 
 -- Obtener del último registro no atendido, el comando recibido.
-SET @lastCommand = SELECT JSON_VALUE('{"command":"TRASH"}', "$.command");
+SET @lastCommand = JSON_UNQUOTE(JSON_EXTRACT(@lastRequest, "$.command"));
 
 -- Se demuestra que las variables contienen la información deseada.
 SELECT @lastRequest AS "Úlima petición en Queue", @lastCommand AS "Último comando";
