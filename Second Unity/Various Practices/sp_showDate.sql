@@ -1,5 +1,5 @@
 
-USE AdvancedSQLProcedures;
+USE AdvancedSQLProcedure;
 
 DROP TABLE IF EXISTS Months;
 
