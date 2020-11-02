@@ -1,0 +1,45 @@
+
+{
+    "studentsGrades":[{
+        "name":"Emilio Sosa",
+        "subject":"Natural Science",
+        "section" : "1500",
+        "grade" : "72%"
+    }
+    ,
+    {
+        "name":"Lisa Sabala",
+        "subject":"Calculous II",
+        "section" : "0800",
+        "grade" : "59%"
+    }
+    ,
+    {
+        "name":"Joseph Joestar",
+        "subject":"Programming I",
+        "section" : "1400",
+        "grade" : "64%"
+    }
+    ,
+    {
+        "name":"Josuke Higashikata",
+        "subject":"Basic Math",
+        "section" : "1200",
+        "grade" : "34%"
+    }
+    ,
+    {
+        "name":"Marion Chávez",
+        "subject":"Theatre",
+        "section" : "0700",
+        "grade" : "98%"
+    }
+    ,
+    {
+        "name":"Trish Una",
+        "subject":"Cultural Dancing",
+        "section" : "0800",
+        "grade" : "85%"
+    }
+    ]
+}
