@@ -3,13 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Indexed DB Homework</title>
 </head>
 <body>
 
-    <script src="dataBaseFunctions.js">        
+    <div id="container">
+        <div id="options">
+            <input type="radio" id="add" name="transaction" value="add" checked>
+            <label for="add">Agregar</label><br>
+            <input type="radio" id="delete" name="transaction" value="delete">
+            <label for="delete">Eliminar</label><br>
+            <input type="radio" id="modify" name="transaction" value="modify">
+            <label for="modify">Modificar</label><br>
+            <input type="radio" id="previous" name="transaction" value="previous">
+            <label for="previous">Anterior</label><br>
+            <input type="radio" id="next" name="transaction" value="next">
+            <label for="next">Siguiente</label><br>
+            <input type="radio" id="first" name="transaction" value="first">
+            <label for="first">Primero</label><br>
+            <input type="radio" id="last" name="transaction" value="last">
+            <label for="last">Último</label>
 
-    </script>
+        </div>
+
+        <div id="textbox">
+            <input type="text" id="elementText" placeholder="Ingrese texto">
+        </div>
+
+        <div>
+            <input type="button" id="accept" value="Aceptar"><br>
+            <input type="button" id="clean" value="Limpiar">
+        </div>
+    </div>
+    
     
 </body>
+    <script src="dataBaseFunctions.js"></script>
+    <script>
+        
+        var elementTextField = document.getElementById("elementText"),
+            acceptButton = document.getElementById("accept"),
+            cleanButton = document.getElementById("clean");  
+            
+        const queries = [
+            document.getElementById("add"),
+            document.getElementById("delete"),
+            document.getElementById("modify"),
+            document.getElementById("previous"),
+            document.getElementById("next"),
+            document.getElementById("first"),
+            document.getElementById("last")
+        ];
+
+        function fieldClean(){
+            elementTextField.value = "";
+        }
+
+        document.getElementById("clean").addEventListener("click", fieldClean);        
+
+        function transactionExec(query, elementText) {
+            switch (query){
+                case "add":
+                    insertElement(elementText);
+                    fieldClean();
+                    break;
+                
+                case "delete":
+                    deleteElement(elementText);
+                    fieldClean();
+                    break;
+                
+                case "modify":
+                    modifyElement(elementText);
+                    fieldClean();
+                    break;
+                
+                case "previous":
+                    previousElement(elementText);
+                    break;
+                
+                case "next":
+                    nextElement(elementText);
+                    break;
+
+                case "first":
+                    getFirstElement();
+                    
+                    break;
+                
+                case "last":
+                    getLastElement();
+                    break;
+            }
+
+            
+        }
+
+        acceptButton.addEventListener("click", function(){
+            for(i = 0; i < queries.length; i++){
+                if(queries[i].checked){
+                    transactionExec(queries[i].id, elementTextField.value);
+                }
+
+            }
+        });
+    </script>
 </html>
