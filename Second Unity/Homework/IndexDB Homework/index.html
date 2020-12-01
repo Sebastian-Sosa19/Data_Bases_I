@@ -38,13 +38,26 @@
     
     
 </body>
-    <script src="dataBaseFunctions.js"></script>
+    <script src="indexedDBFunctions.js"></script>
     <script>
+        /* 
+            Cada vez que la página cargue, deberá colocar el primer elemento en la caja de texto.
+        **/
+        window.onload = function(){
+            getFirstElement();
+            
+        }
         
+        /*
+            Guardamos los objetos más importantes (caja de texto, botón de aceptar, botón de limpiar) en variables.
+        */
         var elementTextField = document.getElementById("elementText"),
             acceptButton = document.getElementById("accept"),
-            cleanButton = document.getElementById("clean");  
-            
+            cleanButton = document.getElementById("clean");
+        
+        /*
+            Creamos un arreglo que contenga a las opciones del input ratio.
+        */            
         const queries = [
             document.getElementById("add"),
             document.getElementById("delete"),
@@ -55,12 +68,21 @@
             document.getElementById("last")
         ];
 
+        /*
+            Función que limpia el campo de texto.
+        */
         function fieldClean(){
             elementTextField.value = "";
         }
 
+        /*
+            Cuando se presiona el botón "Limpiar" se activa un elemento que llama a la función anterior, que limpia la casilla.
+        */
         document.getElementById("clean").addEventListener("click", fieldClean);        
 
+        /*
+            En esta función se manda a llamar la función del documento JS según cual input ratio esté seleccionado, recibe una "query" y el elemento de texto a trabajar.
+        */
         function transactionExec(query, elementText) {
             switch (query){
                 case "add":
@@ -79,11 +101,11 @@
                     break;
                 
                 case "previous":
-                    previousElement(elementText);
+                    getPreviousElement(elementText);
                     break;
                 
                 case "next":
-                    nextElement(elementText);
+                    getNextElement(elementText);
                     break;
 
                 case "first":
@@ -99,6 +121,9 @@
             
         }
 
+        /*
+            Por último, se configura un evento al botón de "Aceptar" cuando se hace click en este, se recprre el arreglo que contiene las input ratio, y si la que se está recorriendo se encuentra seleccionada, se manda a llamar a la función trasactionExcen, la cuál recibirá como parámetro el id del input Ratio y el valor que esté en la caja de texto.
+        */
         acceptButton.addEventListener("click", function(){
             for(i = 0; i < queries.length; i++){
                 if(queries[i].checked){
