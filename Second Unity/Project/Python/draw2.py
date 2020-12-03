@@ -6,6 +6,7 @@ import tkinter
 import tkinter.colorchooser
 import tkinter.filedialog
 import xml.dom.minidom
+from MySQLEngine import *
 
 # The following classes define the different commands that 
 # are supported by the drawing application. 
@@ -260,6 +261,10 @@ class DrawingApplication(tkinter.Frame):
         def saveFile():
             filename = tkinter.filedialog.asksaveasfilename(title="Save Picture As...")
             write(filename)
+
+            
+            ## Hacer un llamado a la función de guardar en la BD.
+            ## En caso de que el archivo ya exista, se llama a la función update.
             
         fileMenu.add_command(label="Save As...",command=saveFile)
         
@@ -466,7 +471,7 @@ def main():
     drawingApp = DrawingApplication(root)  
 
     drawingApp.mainloop()
-    print("Program Execution Completed.")
+    print("Program Execution Completed.")    
         
 if __name__ == "__main__":
     main()

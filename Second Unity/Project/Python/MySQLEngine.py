@@ -57,7 +57,7 @@ class MySQLEngine:
             self.link = self.con.cursor()
 
         except mysql.connector.Error as error:
-            print("Usuario no válido. {}".format(error))
+            print("Error de Conexión {}".format(error))
 
     def select(self, query):
         self.link.execute(query)
@@ -128,6 +128,7 @@ class MySQLEngine:
             self.con.commit()
 
             print("Dibujo Eliminado.")
+            ## Falta eliminarlo físicamente.
 
         except mysql.connector.Error as error:
             print("Borrado de dibujo fallido. {}".format(error))
@@ -143,6 +144,13 @@ class MySQLEngine:
 
         except mysql.connector.Error as error:
             print("No se han podido recuperar los dibujos {}".format(error))
+
+    def getJsonFile(self, fileName):
+        f = open(fileName, "r")
+
+        json = f.read()
+        return json
+
 
 
 
